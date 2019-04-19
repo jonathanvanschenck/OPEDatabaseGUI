@@ -10,7 +10,7 @@ import openF as GopenF
 import metadata as Gmeta
 import saveF as GsaveF
 import databaseBackend as DB
-
+import search as Gsearch
 
 class App(tk.Frame):
     def __init__(self,root=None):
@@ -25,6 +25,7 @@ class App(tk.Frame):
         self.meta = Gmeta.widget(self,row=1,column=0)
         self.saveF = GsaveF.widget(self,self.openF,self.meta,self.db,
                                    row=2,column=0)
+        self.search = Gsearch.widget(self,self.db,row=1,column=1)
         self.print = tk.Button(self,text="print",command=lambda :print(self.meta()))
         self.print.grid(row=3)
 
@@ -32,10 +33,15 @@ class App(tk.Frame):
     def commitChanges(self):
         if messagebox.askyesno("Close", "Commit Changes to database?"):
             self.db.commit()
+        self.db.shutdown()
         self.root.destroy()
     
 
 if __name__ == "__main__":
+    try:
+        db.shutdown()
+    except:
+        pass
     root = tk.Tk()
     app = App(root)
     app.root.title("OPE Database")

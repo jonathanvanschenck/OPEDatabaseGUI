@@ -1,6 +1,5 @@
 import tkinter as tk
 from time import localtime
-import json
 
 defaultUser = "JVS"
 materialOpts = {"JVS":["ADT","Xyl","Red Pig","Pc"],
